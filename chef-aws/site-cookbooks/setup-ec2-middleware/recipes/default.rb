@@ -75,7 +75,7 @@ end
 #############
 
 # install depend lib
-%w{gcc openssl-devel}.each do |pkg_name|
+%w{gcc openssl-devel ruby-devel}.each do |pkg_name|
   package pkg_name do
     action :install
   end
@@ -89,10 +89,20 @@ end
     action :run
   end
 end
+
+# bundler install
+
  
 # set global ruby
 execute "set global ruby" do
   not_if "source /etc/profile.d/rbenv.sh; rbenv global | grep '#{node.set["rbenv"]["ruby"]["global"]}'"
-  command "source /etc/profile.d/rbenv.sh; rbenv global #{node.set["rbenv"]["ruby"]["global"]}; rbenv rehash"
+  command "source /etc/profile.d/rbenv.sh; rbenv global #{node.set["rbenv"]["ruby"]["global"]}; rbenv rehash;"
   action :run
 end
+
+# install bundler to global
+execute "install bundler" do
+  command "gem install bundle"
+  action :run
+end
+

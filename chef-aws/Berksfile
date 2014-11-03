@@ -1,7 +1,5 @@
 source "https://supermarket.getchef.com"
 
 cookbook 'git'
-cookbook 'rbenv', :git => 'git://github.com/fnichol/chef-rbenv.git'
-cookbook 'ruby_build'
 cookbook 'nodejs'
 cookbook 'passenger_apache2'

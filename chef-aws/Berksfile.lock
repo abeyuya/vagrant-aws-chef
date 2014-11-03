@@ -1,13 +1,7 @@
 DEPENDENCIES
   git
-  mysql
   nodejs
   passenger_apache2
-  rbenv
-    git: git://github.com/fnichol/chef-rbenv.git
-    revision: f2b53292e810dd2b43f6121f9958f5f29979dcb1
-    branch: v0.7.2
-  ruby_build (~> 0.8.0)
 
 GRAPH
   7-zip (1.0.2)
@@ -31,10 +25,7 @@ GRAPH
     yum (~> 3.0)
     yum-epel (>= 0.0.0)
   iptables (0.14.0)
-  java (1.28.0)
   logrotate (1.7.0)
-  mysql (5.5.4)
-    yum-mysql-community (>= 0.0.0)
   nodejs (2.1.0)
     apt (>= 0.0.0)
     ark (>= 0.0.0)
@@ -44,10 +35,6 @@ GRAPH
   passenger_apache2 (2.2.2)
     apache2 (>= 1.0.4)
     build-essential (>= 0.0.0)
-  rbenv (0.7.2)
-    java (> 1.4.0)
-    ruby_build (>= 0.0.0)
-  ruby_build (0.8.0)
   runit (1.5.10)
     build-essential (>= 0.0.0)
     yum (~> 3.0)
@@ -57,5 +44,3 @@ GRAPH
   yum (3.4.0)
   yum-epel (0.5.1)
     yum (~> 3.0)
-  yum-mysql-community (0.1.10)
-    yum (>= 3.0)
