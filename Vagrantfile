@@ -8,11 +8,11 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # 起動時設定
-  # vagrant up --provider=aws
+  config.ssh.pty = true
+  config.omnibus.chef_version = :latest
   config.vm.box     = "dummy"
   config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.omnibus.chef_version = :latest
 
   # awsインスタンス生成
   config.vm.provider :aws do |aws, override|
@@ -23,10 +23,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aws.ami                  = ENV['AWS_AMI']
     aws.security_groups      = ENV['AWS_SECURITY_GROUP']
     aws.instance_type        = "t2.micro"
-    aws.user_data = <<-USER_DATA
-      #!/bin/sh
-      sed -i -e 's/^\\(Defaults.*requiretty\\)/#\\1/' /etc/sudoers
-    USER_DATA
 
     override.ssh.private_key_path = ENV['AWS_SSH_PRIVATE_KEY_PATH']
     override.ssh.username         = ENV['AWS_SSH_USERNAME']
@@ -35,7 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # プロビジョニング
   config.berkshelf.enabled = false
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
+    # chef.log_level = :debug
     chef.cookbooks_path = [
       "./chef-aws/cookbooks",
       "./chef-aws/site-cookbooks"
@@ -43,18 +39,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.json = {
       rbenv: {
-        rubies: ["2.1.1"],
-        global: "2.1.1"
-      },
-      mysql: {
-        server_root_password: ''
+        users: [ENV['AWS_SSH_USERNAME']],
+        ruby: {
+          versions: ["2.1.0"],
+          global: "2.1.0"
+        },
       },
     }
 
     chef.run_list = [
-      "ruby_build",
-      # "rbenv::vagrant",
-      # "rbenv::system",
+      "recipe[setup-ec2-middleware]",
       # "passenger_apache2",
     ]
 
