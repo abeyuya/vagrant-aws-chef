@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # ENV value load from ./.env
-Dotenv.load
+# Dotenv.load
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"

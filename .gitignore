@@ -2,3 +2,4 @@
 /.vagrant
 /chef-aws/cookbooks/
 /chef-aws/berks-cookbooks/
+/vendor/bundler
